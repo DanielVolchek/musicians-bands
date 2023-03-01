@@ -1,8 +1,11 @@
-const {Sequelize, sequelize} = require('./db');
+const { Sequelize, sequelize } = require("./db");
 
 // TODO - define the Band model
-let Band;
+let Band = Sequelize.define("band", {
+  name: Sequelize.STRING,
+  genre: Sequelize.STRING,
+});
 
 module.exports = {
-    Band
+  Band,
 };
