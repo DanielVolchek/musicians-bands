@@ -29,6 +29,6 @@ describe("Band and Musician Models", () => {
       instrument: "Guitar",
     });
     expect(musician.name).toBe("John Lennon");
-    expect(musician.genre).toBe("Guitar");
+    expect(musician.instrument).toBe("Guitar");
   });
 });
