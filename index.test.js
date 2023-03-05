@@ -31,4 +31,39 @@ describe("Band and Musician Models", () => {
     expect(musician.name).toBe("John Lennon");
     expect(musician.instrument).toBe("Guitar");
   });
+
+  test("band can have multiple musicians", async () => {
+    const musician1 = await Musician.create({
+      name: "John Lennon",
+      instrument: "Guitar",
+    });
+    const musician2 = await Musician.create({
+      name: "Paul McCartney",
+      instrument: "Bass",
+    });
+    const musician3 = await Musician.create({
+      name: "George Harrison",
+      instrument: "Guitar",
+    });
+
+    const band = await Band.create({
+      name: "The Beatles",
+      genre: "Classic Rock",
+    });
+
+    band.addMusician(musician1);
+    band.addMusician(musician2);
+    band.addMusician(musician3);
+
+    const foundMusicians = band.getMusicians();
+
+    expect(foundMusicians.length).toBe(3);
+    expect(foundMusicians[0].name).toBe("John Lennon");
+    expect(foundMusicians[1].name).toBe("Paul McCartney");
+    expect(foundMusicians[2].name).toBe("George Harrison");
+
+    expect(foundMusicians[0].instrument).toBe("Guitar");
+    expect(foundMusicians[1].instrument).toBe("Bass");
+    expect(foundMusicians[2].instrument).toBe("Guitar");
+  });
 });
