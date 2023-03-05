@@ -81,7 +81,8 @@ describe("Band and Musician Models", () => {
       expect(foundMusicians[2].instrument).toBe("Guitar");
     });
 
-    test("band can have multiple songs", async () => {
+
+    function bandsSongs = async () => {
       const band = await Band.create({
         name: "The Beatles",
         genre: "Classic Rock",
@@ -103,7 +104,11 @@ describe("Band and Musician Models", () => {
       expect(foundSongs.length).toBe(2);
       expect(foundSongs[0].title).toBe("Hey Jude");
       expect(foundSongs[1].title).toBe("Here Comes The Sun");
-    });
+
+      return band;
+    }
+
+    test("band can have multiple songs", bandsSongs);
 
     test("songs can have multiple bands", async () => {
       const band1 = await Band.create({
@@ -128,6 +133,16 @@ describe("Band and Musician Models", () => {
       expect(foundBands.length).toBe(2);
       expect(foundBands[0].name).toBe("The Beatles");
       expect(foundBands[1].name).toBe("The Beatles 2");
+    });
+  });
+
+  describe("eager loading tests", () => {
+    test("can eager load bands with musicians", async () => {
+        
+      const band = await bandsSongs();
+
+      const bandsWithMusicians = band.findAll({include: Musician})
+      expect(bandsWithMusicians.length).toBe(1);
     });
   });
 });
