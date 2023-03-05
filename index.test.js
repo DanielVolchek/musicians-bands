@@ -55,7 +55,8 @@ describe("Band and Musician Models", () => {
     band.addMusician(musician2);
     band.addMusician(musician3);
 
-    const foundMusicians = band.getMusicians();
+    const foundMusicians = await band.getMusicians();
+    console.log(foundMusicians);
 
     expect(foundMusicians.length).toBe(3);
     expect(foundMusicians[0].name).toBe("John Lennon");
